@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { ThemeContext } from './ThemeContext';
+import { THEMES } from './ThemeConstants';
 
-// Theme provider component
-export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState('light');
+
+export default function ThemeProvider({ children }) {
+    const [theme, setTheme] = useState(THEMES.LIGHT);
 
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        setTheme((prevTheme) => (prevTheme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT));
     };
 
     const value = {
@@ -18,4 +20,4 @@ export const ThemeProvider = ({ children }) => {
             {children}
         </ThemeContext.Provider>
     );
-};
+}

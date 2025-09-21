@@ -40,3 +40,41 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Add to App.css for visual theme changes */
+.app.light {
+    background-color: #ffffff;
+    color: #213547;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app.dark {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app.dark .card {
+    background-color: #2a2a2a;
+}
+
+.app.dark button {
+    background-color: #4a4a4a;
+    color: white;
+    border-color: #6a6a6a;
+}
+
+.app.dark button:hover {
+    background-color: #5a5a5a;
+    border-color: #7a7a7a;
+}
+
+.app.dark a {
+    color: #61dafb;
+}
+
+.app.dark .read-the-docs {
+    color: #888;
+}
