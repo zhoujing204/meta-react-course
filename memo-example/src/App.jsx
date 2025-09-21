@@ -1,36 +1,55 @@
 import './App.css'
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import { AppContext, useAppContext } from './AppContext';
 
-
 const App = () => {
+  const [counter, setCounter] = useState(0);
+  const previousValue = useRef();
+
   const a = 'hi';
   const b = 'bye';
-  const value = useMemo(() => ({a, b}), [a, b]);
+
+  // Toggle between these two lines to test:
+  const value = useMemo(() => ({a, b}), [a, b]); // ✅ With memoization
+  // const value = {a, b}; // ❌ Without memoization
+
+  console.log('🔴 App rendered', counter);
+  console.log('🔵 Same object reference?', previousValue.current === value);
+  previousValue.current = value;
 
   return (
     <AppContext.Provider value={value}>
+      <button onClick={() => setCounter(c => c + 1)}>
+        Force Re-render ({counter})
+      </button>
       <ComponentA />
     </AppContext.Provider>
   );
 };
 
-const ComponentA = React.memo(
-  () =>
+const ComponentA = React.memo(() => {
+  console.log('🟡 ComponentA rendered');
+  return (
     <div>
       <h1> ComponentA </h1>
       <ComponentB />
     </div>
-);
-const ComponentB = () =>
-<div>
-  <h2> ComponentB </h2>
-  <ComponentC />
-</div>;
+  );
+});
+
+const ComponentB = () => {
+  console.log('🟠 ComponentB rendered');
+  return (
+    <div>
+      <h2> ComponentB </h2>
+      <ComponentC />
+    </div>
+  );
+};
 
 const ComponentC = () => {
   const contextValue = useAppContext(AppContext);
-  console.log('ComponentC render', contextValue);
+  console.log('🟢 ComponentC rendered', contextValue);
   return (
     <div>
       <h3> ComponentC </h3>
