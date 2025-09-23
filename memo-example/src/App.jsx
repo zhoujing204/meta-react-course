@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { AppContext, useAppContext } from './AppContext';
 
 const App = () => {
@@ -10,8 +10,8 @@ const App = () => {
   const b = 'bye';
 
   // Toggle between these two lines to test:
-  const value = useMemo(() => ({a, b}), [a, b]); // ✅ With memoization
-  // const value = {a, b}; // ❌ Without memoization
+  // const value = useMemo(() => ({a, b}), [a, b]); // ✅ With memoization
+  const value = {a, b}; // ❌ Without memoization
 
   console.log('🔴 App rendered', counter);
   console.log('🔵 Same object reference?', previousValue.current === value);
