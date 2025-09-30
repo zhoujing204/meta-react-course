@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 
-// 1. The reusable component with a render prop
-const DataFetcher = ({ url, render }) => {
+// 1. The custom hook for data fetching logic
+const useData = (url) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -16,34 +17,27 @@ const DataFetcher = ({ url, render }) => {
     };
 
     mockFetch();
-  }, [url]);
+  }, [url]); // This effect re-runs whenever the URL changes
 
-  // The component calls the render prop with the data it fetched,
-  // letting the parent decide how to display it.
-  return render(data);
+  // The hook returns the data, giving the component full control.
+  return data;
 };
 
-// 2. A component that uses DataFetcher to show dessert count
+// 2. A component that uses the hook to get and display desserts
 const DessertsCount = () => {
+  const desserts = useData('/desserts');
+
   return (
-    <DataFetcher
-      url="/desserts"
-      render={(data) => (
-        <p>Number of desserts available: {data.length}</p>
-      )}
-    />
+    <p>Number of desserts available: {desserts.length}</p>
   );
 };
 
-// 3. A component that uses DataFetcher to show drink count
+// 3. A component that uses the hook to get and display drinks
 const DrinksCount = () => {
+  const drinks = useData('/drinks');
+
   return (
-    <DataFetcher
-      url="/drinks"
-      render={(data) => (
-        <p>Number of drinks available: {data.length}</p>
-      )}
-    />
+    <p>Number of drinks available: {drinks.length}</p>
   );
 };
 
